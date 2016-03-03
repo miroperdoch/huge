@@ -115,6 +115,38 @@ class View
 
         return false;
     }
+    
+    /**
+	 * checkActiveControllerUniversal - checks if active controller exists for both render() and renderMulti() Views
+	 */
+	public static function checkForActiveControllerUniversal($filename, $navigation_controller) {
+        
+		// $filename is not an array		
+		if ((array) $filename !== $filename) {
+		
+			$split_filename = explode("/", $filename);
+			$active_controller = $split_filename[0];
+
+			if ($active_controller == $navigation_controller) {
+				return true;
+			}			
+		
+		// $filename is an array		
+		} else {
+		
+			for ($i = 0; $i < sizeof($filename); $i++) {
+			
+				$split_filename = explode("/", $filename[$i]);
+				$active_controller = $split_filename[0];
+				
+				if ($active_controller == $navigation_controller) {
+					return true;					
+				}
+			}	
+		}
+			
+        return false;
+    }
 
     /**
      * Checks if the passed string is the currently active controller-action (=method).
